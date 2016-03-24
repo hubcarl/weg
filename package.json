@@ -1,0 +1,49 @@
+{
+  "name": "weg",
+  "version": "0.0.3",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "weg": "bin/weg.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "hubcarl"
+  },
+  "dependencies": {
+    "fis3": "^3.0.6",
+    "fis-parser-less": "^0.1.3",
+    "fis3-hook-module": "^1.1.1",
+    "fis3-postpackager-loader": "1.3.12",
+    "fis3-hook-commonjs": "0.1.8",
+    "liftoff": "^2.1.0",
+    "minimist": "^1.1.1"
+  },
+  "_id": "weg@0.0.3",
+  "_shasum": "049781316d6bb1d0d00df2f788b2172b945beecc",
+  "_from": "weg@*",
+  "_npmVersion": "2.14.7",
+  "_nodeVersion": "4.2.3",
+  "_npmUser": {
+    "name": "hubcarl",
+    "email": "hubcarl@126.com"
+  },
+  "dist": {
+    "shasum": "049781316d6bb1d0d00df2f788b2172b945beecc",
+    "tarball": "http://registry.npmjs.org/weg/-/weg-0.0.3.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "hubcarl",
+      "email": "hubcarl@126.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/weg-0.0.3.tgz_1458798233215_0.20293906587176025"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/weg/-/weg-0.0.3.tgz"
+}
