@@ -9,7 +9,7 @@ fis.set('project.ignore', ['output/**', 'node_modules/**', '.git/**', '.svn/**']
 
 fis.hook('commonjs');
 
-fis.match('server.js',{
+fis.match('/{index,server,app}.js',{
     useMap:false,
     useHash: false,
     useCompile: false
