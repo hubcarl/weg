@@ -1,4 +1,4 @@
-#fis3－swig-node
+#weg
 
 
 基于fis3+express+swig的前端和后端集成解决方案工程解决方案。在阅读此文档之前，希望你最好对fis、swig、express 、mysql有一定的了解。
@@ -36,7 +36,7 @@
 
 ## 示例截图
 
- ![image](https://raw.githubusercontent.com/hubcarl/fis3-express-swig/master/client/public/static/images/demo.png)
+ ![image](https://raw.githubusercontent.com/hubcarl/weg-blog/master/client/public/static/images/demo.png)
 
 
 ## 快速开始
@@ -45,22 +45,22 @@
 
 ```bash
 # 安装 fis 到全局
-npm install -g fis
+npm install -g weg
 
 # 下载工程.
-git clone https://github.com/hubcarl/fis3-express-swig.git
+git clone https://github.com/hubcarl/weg-blog.git
 
 
-# 进入 fis3-express-swig  目录， release 后就可以预览了。
-cd fis3-express-swig
+# 进入 weg-blog  目录， release 后就可以预览了。
+cd weg-blog
 
 
 #工程运行
-fis3 release -w 文件修改监控
-fis3 release -m  资源文件md5签名 
-fis3 release --optimize --md5 --watch --pack # fis release -omwp
-fis3 release -omwp   o 资源压缩  m 资源文件md5签名  w 文件修改监控   p打包合并
-fis3 server start --timeout 10000  --port 9000   --type node
+weg release -w 文件修改监控
+weg release -m  资源文件md5签名 
+weg release --optimize --md5 --watch --pack # fis release -omwp
+weg release -omwp   o 资源压缩  m 资源文件md5签名  w 文件修改监控   p打包合并
+weg server start --timeout 10000  --port 9000   --type node
 ```
 
 ### page 目录
