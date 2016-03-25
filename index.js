@@ -23,6 +23,7 @@ fis.match('/server/**.**',{
 
 
 fis.match('/client/views/**.tpl', {
+    useMap:true,
     isMod:true
 });
 
