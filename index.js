@@ -22,6 +22,10 @@ fis.match('/server/**.**',{
 });
 
 
+fis.match('/client/views/**.tpl', {
+    isMod:true
+});
+
 fis.match('/client/views/(**).{png,js,css}', {
     release: '/client/public/$1'
 });
@@ -48,7 +52,22 @@ fis.match('/{client/public, client/views}/**.css', {
     optimizer: fis.plugin('clean-css')
 });
 
-fis.match('/{client/public, client/views}/**.{png,jpg}', {
+fis.match('/{client/public, client/views}/**.png', {
     // fis-optimizer-png-compressor 插件进行压缩，已内置
     optimizer: fis.plugin('png-compressor')
+});
+
+// 对 CSS 进行图片合并
+fis.match('*.css', {
+    // 给匹配到的文件分配属性 `useSprite`
+    useSprite: true
+});
+
+// 启用 fis-spriter-csssprites 插件
+//fis.match('::package', {
+//    spriter: fis.plugin('csssprites')
+//})
+
+fis.match('::package', {
+    postpackager: fis.plugin('loader')
 });
