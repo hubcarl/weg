@@ -23,25 +23,33 @@ fis.match('/server/**.**',{
 
 
 
-fis.match('/client/public/static/js/mod.js', {
-    url:'/public/static/js/mod.js',
-    isMod: false,
-    wrap: false
-});
-
-
 
 fis.match('/client/views/(**).tpl', {
-    url: '/$1'
+    useMap:true,
+    preprocessor: fis.plugin('require')
 });
 
+
+fis.match('/client/**.{js,css,png,jpg,gif}', {
+    useHash:true
+});
+
+fis.match('/client/**.js', {
+    isMod:true
+});
+
+
+fis.match('/client/**.{js,css}', {
+    useMap:true
+});
+
+// 同名组件依赖
 fis.match('/client/views/**.{tpl,js,css}', {
-    useMap:true,
     useSameNameRequire: true
 });
 
 
-fis.match('/client/views/(**).{png,js,css}', {
+fis.match('/client/views/(**).{gif,png,js,css}', {
     url:'/public/$1',
     release: '/client/public/$1'
 });
@@ -49,27 +57,28 @@ fis.match('/client/views/(**).{png,js,css}', {
 // 公共静态资源
 fis.match('/{client/public, client/views}/(**).js', {
     url:'/public/$1',
-    useHash: true,
-    isMod: true,
     // fis-optimizer-uglify-js 插件进行压缩，已内置
     optimizer: fis.plugin('uglify-js')
 });
 
 fis.match('/{client/public, client/views}/(**).css', {
     url:'/public/$1',
-    useHash: true,
     // fis-optimizer-clean-css 插件进行压缩，已内置
     optimizer: fis.plugin('clean-css')
 });
 
 fis.match('/{client/public, client/views}/(**).png', {
     url:'/public/$1',
-    useHash: true,
     // fis-optimizer-png-compressor 插件进行压缩，已内置
     optimizer: fis.plugin('png-compressor')
 });
 
 
+fis.match('/client/public/static/js/mod.js', {
+    url:'/public/static/js/mod.js',
+    isMod: false,
+    wrap: false
+});
 
 fis.match('::package', {
     postpackager: fis.plugin('loader')
