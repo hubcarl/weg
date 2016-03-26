@@ -25,6 +25,7 @@ fis.match('/server/**.**',{
 
 
 fis.match('/client/views/(**).tpl', {
+    url: '/$1',
     useMap:true,
     preprocessor: fis.plugin('require')
 });
