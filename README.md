@@ -216,3 +216,4 @@ news/index/index.tpl
 
 编译配置文件，详情请查看[配置 API](http://fis.baidu.com/docs/api/fis-conf.html)。
 
+http://www.tuicool.com/articles/6jueiib
