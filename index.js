@@ -7,7 +7,7 @@ fis.cli.info = require('./package.json');
 
 fis.set('project.ignore', ['output/**', 'node_modules/**', '.git/**', '.svn/**']);
 
-fis.hook('commonjs');
+fis.hook('commonjs',{});
 
 fis.match('/{index,server,app}.js',{
     useMap:false,
@@ -25,8 +25,9 @@ fis.match('/server/**.**',{
 
 
 fis.match('/client/views/(**).tpl', {
-    url: '/$1',
     useMap:true,
+    url: '/$1',
+    //preprocessor: fis.plugin('require')
     preprocessor: fis.plugin('extlang')
 });
 
@@ -75,8 +76,8 @@ fis.match('/{client/public, client/views}/(**).png', {
 });
 
 
-fis.match('/client/public/static/js/mod.js', {
-    url:'/public/static/js/mod.js',
+fis.match('/client/public/framework/(**).js', {
+    url:'/public/framework/$1',
     isMod: false,
     wrap: false
 });
