@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Weg by hubcarl</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Weg</h1>
+      <h2 class="project-tagline">基于fis3 + nodejs ＋ swig 前端集成打包框架</h2>
+      <a href="https://github.com/hubcarl/weg" class="btn">View on GitHub</a>
+      <a href="https://github.com/hubcarl/weg/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/hubcarl/weg/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="weg" class="anchor" href="#weg" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>weg</h1>
+
+<p>基于fis3+express+swig的前端和后端集成解决方案工程解决方案。在阅读此文档之前，希望你最好对fis、swig、express 、mysql有一定的了解。</p>
+
+<h2>
+<a id="目录" class="anchor" href="#%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>目录</h2>
+
+<ul>
+<li><a href="#%E7%89%B9%E7%82%B9">特点</a></li>
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">快速开始</a></li>
+<li>
+<a href="#%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83">目录规范</a>
+
+<ul>
+<li>
+<a href="#%E5%89%8D%E7%AB%AF">client 目录</a>
+
+<ul>
+<li>
+<a href="#page-%E7%9B%AE%E5%BD%95">public 目录</a>
+
+<ul>
+<li><a href="#%E7%BB%84%E4%BB%B6">component 目录</a></li>
+<li><a href="#css%EF%BC%8Fjs%EF%BC%8Fimage%E5%85%AC%E5%85%B1%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">static 目录</a></li>
+</ul>
+</li>
+<li>
+<a href="#static-%E7%9B%AE%E5%BD%95">views 目录</a>
+
+<ul>
+<li><a href="#%E9%A1%B5%E9%9D%A2%E6%A8%A1%E6%9D%BF">page 目录</a></li>
+<li><a href="#%E7%BB%84%E4%BB%B6">widget 目录</a></li>
+</ul>
+</li>
+<li><a href="#serverconf">server.conf</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%90%8E%E7%AB%AF">server 目录</a>
+
+<ul>
+<li><a href="#%E8%B7%AF%E7%94%B1">controller 目录</a></li>
+<li><a href="#%E7%BB%84%E4%BB%B6%E6%89%A9%E5%B1%95">lib 目录</a></li>
+<li><a href="#%E4%B8%AD%E9%97%B4%E4%BB%B6">middleware 目录</a></li>
+<li><a href="%EF%BC%83%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">model 目录</a></li>
+<li><a href="%EF%BC%83%E5%B7%A5%E5%85%B7%E7%B1%BB">utils 目录</a></li>
+</ul>
+</li>
+<li><a href="#fis%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">fis-conf.js</a></li>
+<li><a href="#express%E5%90%AF%E5%8A%A8%E5%85%A5%E5%8F%A3">server.js</a></li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="特点" class="anchor" href="#%E7%89%B9%E7%82%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>特点</h2>
+
+<ul>
+<li>基于原生fis前端集成方案对前端资源进行打包，相比自定义fis扩展，方便fis组件升级和维护。</li>
+<li>整合前端和后端，提供一套骨架，并提供基于mysql的运行示例，拿来即可使用，扩展也很方便。</li>
+<li>模板引擎采用 <a href="http://paularmstrong.github.io/swig/">swig</a> ，提供易用的 <code>html</code>、<code>head</code>、<code>body</code>、<code>widget</code>、<code>script</code>、<code>style</code> 等扩展标签。基于这些标签后端可以自动完成对页面的性能优化。</li>
+<li>基于 <code>widget</code> 标签，可以轻松实现组件化，同名tpl、 css、js自动关联加载。</li>
+</ul>
+
+<h2>
+<a id="示例截图" class="anchor" href="#%E7%A4%BA%E4%BE%8B%E6%88%AA%E5%9B%BE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>示例截图</h2>
+
+<p><img src="https://raw.githubusercontent.com/hubcarl/weg-blog/master/client/public/static/images/demo.png" alt="image"></p>
+
+<h2>
+<a id="快速开始" class="anchor" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>快速开始</h2>
+
+<p>如果还没有安装 <a href="http://nodejs.org">node</a> 请先安装 <a href="http://nodejs.org">node</a>.</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># 安装 fis 到全局</span>
+npm install -g weg
+
+<span class="pl-c"># 下载工程.</span>
+git clone https://github.com/hubcarl/weg-blog.git
+
+
+<span class="pl-c"># 进入 weg-blog  目录， release 后就可以预览了。</span>
+<span class="pl-c1">cd</span> weg-blog
+
+
+<span class="pl-c">#工程运行</span>
+weg release -w 文件修改监控
+weg release -m  资源文件md5签名 
+weg release --optimize --md5 --watch --pack <span class="pl-c"># fis release -omwp</span>
+weg release -omwp   o 资源压缩  m 资源文件md5签名  w 文件修改监控   p打包合并
+weg server start --timeout 10000  --port 9000   --type node</pre></div>
+
+<h3>
+<a id="page-目录" class="anchor" href="#page-%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>page 目录</h3>
+
+<p>所有页面级别的模板文件，放在此目录。此tpl 可以直接在浏览器中预览。比如 page/index.tpl 可以通过 <a href="http://127.0.0.1:9000">http://127.0.0.1:9000</a> 访问。 需要强调的的是，模板引擎采用的是 <a href="http://paularmstrong.github.io/swig/">swig</a>, 可以采用模板继承机制来实现模板复用。</p>
+
+<p>layout.tpl</p>
+
+<div class="highlight highlight-text-html-smarty"><pre>&lt;!doctype html&gt;
+<span class="pl-s1"><span class="pl-pse">{%</span> html <span class="pl-v">lang=</span><span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span> <span class="pl-v">framework=</span><span class="pl-s"><span class="pl-pds">"</span>public/static/js/mod.js<span class="pl-pds">"</span></span>  <span class="pl-pse">%}</span></span>
+    <span class="pl-s1"><span class="pl-pse">{%</span> head <span class="pl-pse">%}</span></span>
+        &lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">meta</span> <span class="pl-e">http-equiv</span>=<span class="pl-s"><span class="pl-pds">"</span>X-UA-Compatible<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span>IE=edge<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">meta</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>viewport<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span>width=device-width, initial-scale=1<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">meta</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">meta</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>icon<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>/static/favicon.ico<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">title</span>&gt;<span class="pl-s1"><span class="pl-pse">{</span>{ title <span class="pl-pse">}</span></span>}&lt;/<span class="pl-ent">title</span>&gt;
+
+        <span class="pl-s1"><span class="pl-pse">{%</span> require <span class="pl-s"><span class="pl-pds">"</span>public/static/css/normalize.css<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span>
+        <span class="pl-s1"><span class="pl-pse">{%</span> require <span class="pl-s"><span class="pl-pds">"</span>public/static/css/bootstrap.css<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span>
+        <span class="pl-s1"><span class="pl-pse">{%</span> require <span class="pl-s"><span class="pl-pds">"</span>public/static/css/app.css<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span>
+
+
+    <span class="pl-s1"><span class="pl-pse">{%</span> endhead <span class="pl-pse">%}</span></span>
+
+    <span class="pl-s1"><span class="pl-pse">{%</span> body <span class="pl-pse">%}</span></span>
+
+        <span class="pl-s1"><span class="pl-pse">{%</span> widget <span class="pl-s"><span class="pl-pds">"</span>widget/menu/menu.tpl<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span>
+
+
+            <span class="pl-s1"><span class="pl-pse">{%</span> <span class="pl-c1">block</span> beforecontent <span class="pl-pse">%}</span></span>
+            <span class="pl-s1"><span class="pl-pse">{%</span> endblock <span class="pl-pse">%}</span></span>
+
+            &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>&gt;
+                <span class="pl-s1"><span class="pl-pse">{%</span> <span class="pl-c1">block</span> content <span class="pl-pse">%}</span></span>
+                <span class="pl-s1"><span class="pl-pse">{%</span> endblock <span class="pl-pse">%}</span></span>
+            &lt;/<span class="pl-ent">div</span>&gt;
+
+        <span class="pl-s1"><span class="pl-pse">{%</span> <span class="pl-c1">block</span> aftercontent <span class="pl-pse">%}</span></span>
+        <span class="pl-s1"><span class="pl-pse">{%</span> endblock <span class="pl-pse">%}</span></span>
+
+    <span class="pl-s1"><span class="pl-pse">{%</span> endbody <span class="pl-pse">%}</span></span>
+
+<span class="pl-s1"><span class="pl-pse">{%</span> endhtml <span class="pl-pse">%}</span></span>
+</pre></div>
+
+<p>news/index/index.tpl</p>
+
+<div class="highlight highlight-text-html-smarty"><pre><span class="pl-s1"><span class="pl-pse">{%</span> extends <span class="pl-s"><span class="pl-pds">'</span>page/layout.tpl<span class="pl-pds">'</span></span> <span class="pl-pse">%}</span></span>
+
+<span class="pl-s1"><span class="pl-pse">{%</span> <span class="pl-c1">block</span> content <span class="pl-pse">%}</span></span>
+
+&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>container smart-container<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>row row-offcanvas row-offcanvas-right<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-xs-12 col-sm-9<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>smart-artiles<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>articleList<span class="pl-pds">"</span></span>&gt;
+                <span class="pl-s1"><span class="pl-pse">{%</span> for item in list <span class="pl-pse">%}</span></span>
+                &lt;<span class="pl-ent">li</span>&gt;
+                    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>point<span class="pl-pds">"</span></span>&gt;+<span class="pl-s1"><span class="pl-pse">{</span>{item.hits<span class="pl-pse">}</span></span>}&lt;/<span class="pl-ent">div</span>&gt;
+                    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>card<span class="pl-pds">"</span></span>&gt;
+                        &lt;<span class="pl-ent">h2</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>/detail/<span class="pl-s1"><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-pse">{</span>item.id<span class="pl-pse">}</span></span><span class="pl-pse">}</span></span><span class="pl-pds">"</span></span> <span class="pl-e">target</span>=<span class="pl-s"><span class="pl-pds">"</span>_blank<span class="pl-pds">"</span></span>&gt;<span class="pl-s1"><span class="pl-pse">{</span>{item.title<span class="pl-pse">}</span></span>}&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">h2</span>&gt;
+                        &lt;<span class="pl-ent">div</span>&gt;
+                            &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>actions<span class="pl-pds">"</span></span>&gt;
+                                &lt;<span class="pl-ent">li</span>&gt;
+                                    &lt;<span class="pl-ent">time</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>timeago<span class="pl-pds">"</span></span>&gt;<span class="pl-s1"><span class="pl-pse">{</span>{item.createDate<span class="pl-pse">}</span></span>}&lt;/<span class="pl-ent">time</span>&gt;
+                                &lt;/<span class="pl-ent">li</span>&gt;
+                                &lt;<span class="pl-ent">li</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>tauthor<span class="pl-pds">"</span></span>&gt;
+                                    &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>#<span class="pl-pds">"</span></span> <span class="pl-e">target</span>=<span class="pl-s"><span class="pl-pds">"</span>_blank<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>get<span class="pl-pds">"</span></span>&gt;Sky&lt;/<span class="pl-ent">a</span>&gt;
+                                &lt;/<span class="pl-ent">li</span>&gt;
+                                &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>#<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>kblink-8007<span class="pl-pds">"</span></span>&gt;+收藏&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+                            &lt;/<span class="pl-ent">ul</span>&gt;
+                        &lt;/<span class="pl-ent">div</span>&gt;
+                    &lt;/<span class="pl-ent">div</span>&gt;
+                &lt;/<span class="pl-ent">li</span>&gt;
+                <span class="pl-s1"><span class="pl-pse">{%</span> endfor <span class="pl-pse">%}</span></span>
+            &lt;/<span class="pl-ent">ul</span>&gt;
+            &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>pagerBottom<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>smart-pager<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
+        &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;
+
+<span class="pl-s1"><span class="pl-pse">{%</span> require <span class="pl-s"><span class="pl-pds">"</span>client/views/page/news/index/index.js<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span>
+
+<span class="pl-s1"><span class="pl-pse">{%</span> script <span class="pl-pse">%}</span></span>
+    console.log('&gt;&gt;&gt;&gt;test&gt;&gt;&gt;&gt;&gt;');
+    require('client/views/page/news/index/index.js');
+<span class="pl-s1"><span class="pl-pse">{%</span> endscript <span class="pl-pse">%}</span></span>
+
+
+<span class="pl-s1"><span class="pl-pse">{%</span> endblock <span class="pl-pse">%}</span></span>
+</pre></div>
+
+<h3>
+<a id="static-目录" class="anchor" href="#static-%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>static 目录</h3>
+
+<p>用来存放所有静态资源文件，css, js, images ,组件等等。如：</p>
+
+<pre><code>├── css
+│   ├── bootstrap-theme.css
+│   ├── bootstrap.css
+│   └── style.css
+└── js
+    ├── bootstrap.js
+    └── mod.js
+</code></pre>
+
+<h3>
+<a id="widget-目录" class="anchor" href="#widget-%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>widget 目录</h3>
+
+<p>用来存放各类组件代码。组件分成3类。</p>
+
+<ol>
+<li>
+<p>模板类：包含 tpl, 可以选择性的添加 js 和 css 文件，同名的 js 和 css 会被自动加载。</p>
+
+<p>模板类文件，可以在模板中通过 widget 标签引用。如</p>
+
+<div class="highlight highlight-text-html-smarty"><pre><span class="pl-s1"><span class="pl-pse">{%</span> widget <span class="pl-s"><span class="pl-pds">"</span>widget/menu/menu.tpl<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span></pre></div>
+</li>
+<li>
+<p>js 类： 主要包含 js 文件，放在此目录下的文件一般都会自动被 amd define 包裹，可选择性的添加同名 css 文件，会自动被引用。</p>
+
+<p>此类组件，可以在 tpl 或者 js 中通过 require 标签引用。</p>
+
+<div class="highlight highlight-text-html-smarty"><pre>
+  <span class="pl-s1"><span class="pl-pse">{%</span> require <span class="pl-s"><span class="pl-pds">"</span>client/views/page/news/index/index.js<span class="pl-pds">"</span></span> <span class="pl-pse">%}</span></span>
+
+  <span class="pl-s1"><span class="pl-pse">{%</span> script <span class="pl-pse">%}</span></span>
+      console.log('&gt;&gt;&gt;&gt;test&gt;&gt;&gt;&gt;&gt;');
+      require('client/views/page/news/index/index.js');
+  <span class="pl-s1"><span class="pl-pse">{%</span> endscript <span class="pl-pse">%}</span></span>
+</pre></div>
+</li>
+<li>纯 css 类：只是包含 css 文件。比如 compass. 同样也是可以通过 require 标签引用。</li>
+</ol>
+
+<h3>
+<a id="bigpipe" class="anchor" href="#bigpipe" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>bigpipe</h3>
+
+<p>采用 bigpipe 方案，允许你在渲染页面的时候，提前将框架输出，后续再把耗时的 pagelet 通过 chunk 方式输出到页面，以加速网页渲染。</p>
+
+<ul>
+<li>sync 默认就是此模式，直接输出。</li>
+<li>quicking 此类 widget 在输出时，只会输出个壳子，内容由用户自行决定通过 js，另起请求完成填充，包括静态资源加载。</li>
+<li>async 此类 widget 在输出时，也只会输出个壳子，但是内容在 body 输出完后，chunk 输出 js 自动填充。widget 将忽略顺序，谁先准备好，谁先输出。</li>
+<li>
+<p>pipeline 与 async 基本相同，只是它会严格按顺序输出。</p>
+
+<p>{% widget "widget/header/header.html" mode="pipeline" id="header" %}</p>
+</li>
+<li><p>要让 bigpipe 正常运行，需要前端引入 bigpipe.js, 另外 pagelet 为 quickling 模式，是不会自动加载的，需要用户主动去调用 BigPipe.load 方法，才会加载并渲染</p></li>
+</ul>
+
+<h3>
+<a id="fis-confjs" class="anchor" href="#fis-confjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>fis-conf.js</h3>
+
+<p>编译配置文件，详情请查看<a href="http://fis.baidu.com/docs/api/fis-conf.html">配置 API</a>。</p>
+
+<p><a href="http://www.tuicool.com/articles/6jueiib">http://www.tuicool.com/articles/6jueiib</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/hubcarl/weg">Weg</a> is maintained by <a href="https://github.com/hubcarl">hubcarl</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
