@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Weg by hubcarl</title>
+    <title>weg by hubcarl</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,8 +11,8 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Weg</h1>
-      <h2 class="project-tagline">基于fis3 + nodejs ＋ swig 前端集成打包框架</h2>
+      <h1 class="project-name">weg</h1>
+      <h2 class="project-tagline">基于fis3  +  nodejs ＋ swig 前端集成打包框架</h2>
       <a href="https://github.com/hubcarl/weg" class="btn">View on GitHub</a>
       <a href="https://github.com/hubcarl/weg/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/hubcarl/weg/tarball/master" class="btn">Download .tar.gz</a>
@@ -22,7 +22,7 @@
       <h1>
 <a id="weg" class="anchor" href="#weg" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>weg</h1>
 
-<p>基于fis3+express+swig的前端和后端集成解决方案工程解决方案。在阅读此文档之前，希望你最好对fis、swig、express 、mysql有一定的了解。</p>
+<p>基于weg+express+swig的前端和后端集成解决方案。在阅读此文档之前，希望你最好对fis3、swig、express 、mysql有一定的了解。</p>
 
 <h2>
 <a id="目录" class="anchor" href="#%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>目录</h2>
@@ -107,10 +107,7 @@ git clone https://github.com/hubcarl/weg-blog.git
 
 <span class="pl-c">#工程运行</span>
 weg release -w 文件修改监控
-weg release -m  资源文件md5签名 
-weg release --optimize --md5 --watch --pack <span class="pl-c"># fis release -omwp</span>
-weg release -omwp   o 资源压缩  m 资源文件md5签名  w 文件修改监控   p打包合并
-weg server start --timeout 10000  --port 9000   --type node</pre></div>
+weg server start  --entry app.js 指定node启动入口文件</pre></div>
 
 <h3>
 <a id="page-目录" class="anchor" href="#page-%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>page 目录</h3>
@@ -265,15 +262,136 @@ weg server start --timeout 10000  --port 9000   --type node</pre></div>
 <li><p>要让 bigpipe 正常运行，需要前端引入 bigpipe.js, 另外 pagelet 为 quickling 模式，是不会自动加载的，需要用户主动去调用 BigPipe.load 方法，才会加载并渲染</p></li>
 </ul>
 
+<h2>
+<a id="客户端-pageletjs" class="anchor" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-pageletjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>客户端 Pagelet.js</h2>
+
+<p>对外暴露以下几个方法。</p>
+
+<h3>
+<a id="pageletonpageletarrive" class="anchor" href="#pageletonpageletarrive" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pagelet.onPageletArrive</h3>
+
+<p>此方法不需要主动去调用，当 pagelet 输出的时候会自动调用这个方法。不管是 <code>chunk</code> 输出的 <code>pagelet</code>, 还是靠第二次请求 <code>quickling</code> 类型的 <code>pagelet</code> 都是靠此方法渲染。</p>
+
+<p>示例：</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">Pagelet</span>.<span class="pl-en">onPageletArrive</span>({<span class="pl-s"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>pages-container<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>spage<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>html<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>contact us<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>js<span class="pl-pds">"</span></span><span class="pl-k">:</span>[],<span class="pl-s"><span class="pl-pds">"</span>css<span class="pl-pds">"</span></span><span class="pl-k">:</span>[],<span class="pl-s"><span class="pl-pds">"</span>styles<span class="pl-pds">"</span></span><span class="pl-k">:</span>[],<span class="pl-s"><span class="pl-pds">"</span>scripts<span class="pl-pds">"</span></span><span class="pl-k">:</span>[]});</pre></div>
+
+<p>格式说明 </p>
+
+<ul>
+<li>
+<code>container</code> 容器</li>
+<li>
+<code>id</code> pagelet id</li>
+<li>
+<code>html</code> 内容</li>
+<li>
+<code>js</code> 外联 js 集合</li>
+<li>
+<code>css</code> 外联 css 集合</li>
+<li>
+<code>styles</code> 内联 css 集合</li>
+<li>
+<code>scripts</code> 内联 js 集合</li>
+</ul>
+
+<h3>
+<a id="pageletload" class="anchor" href="#pageletload" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pagelet.load</h3>
+
+<p>默认 <code>quickling</code> 性质的 <code>pagelet</code> 不会主动加载，需要用户主动调用此方法，才会开始加载。</p>
+
+<p>调用方式：</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">Pagelet</span>.<span class="pl-c1">load</span>(<span class="pl-s"><span class="pl-pds">'</span>pageletId<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">Pagelet</span>.<span class="pl-c1">load</span>(<span class="pl-s"><span class="pl-pds">'</span>pageletId1 pageletId2 pagelet Id3<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">Pagelet</span>.<span class="pl-c1">load</span>({
+    pagelets<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>pageletId1<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>pageletId2<span class="pl-pds">'</span></span>]
+    url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/other page url<span class="pl-pds">'</span></span>,
+    cacheID<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>pageletId1&amp;pageletId2<span class="pl-pds">'</span></span>, <span class="pl-c">// 设置后不会重复请求Pagelet</span>
+    param<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>key1=val1&amp;key2=val2<span class="pl-pds">'</span></span>,
+    container<span class="pl-k">:</span> dom <span class="pl-c">/* or id or {pageletId1: dom1, pageletId2: dom2}*/</span>,
+    <span class="pl-en">cb</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+        <span class="pl-c">// excuted when all done.</span>
+    }
+});</pre></div>
+
+<p>参数说明</p>
+
+<ul>
+<li>
+<code>pagelets</code> pagelets 的 id 列表，可以是单个 pagelet， 也可以是多个用空格隔开，或者直接就是一个数组，里面由 pagelet id 组成。</li>
+<li>
+<code>url</code> 页面地址，默认是从当前页面去加载 pagelet，有时你可能需要加载其他页面的 pagelet。</li>
+<li>
+<code>param</code> 附带参数内容。</li>
+<li>
+<code>cacheID</code> pagelet 请求的缓存ID，不设置则请求不会被缓存。</li>
+<li>
+<code>container</code> 指定 pagelet 渲染时的容器。</li>
+<li>
+<code>cb</code> 回调，完成后触发。</li>
+</ul>
+
+<h3>
+<a id="bigpipe-事件" class="anchor" href="#bigpipe-%E4%BA%8B%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BigPipe 事件</h3>
+
+<ul>
+<li>
+<code>pageletarrive</code> 当 pagelet 即将渲染前触发。</li>
+<li>
+<code>pageletinsert</code> pagelet 开始渲染，并已经插入了 css 和 dom 了，还没开始执行脚本时触发。</li>
+<li>
+<code>pageletdone</code> 当 pagelet 全部渲染完成触发。</li>
+</ul>
+
+<p>事件 API</p>
+
+<ul>
+<li>on(type, callback)</li>
+<li>off(type?, callback?)</li>
+<li>once(type, callback)</li>
+<li>trigger(type, args...?)</li>
+</ul>
+
+<h3>
+<a id="服务器controller实现" class="anchor" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8controller%E5%AE%9E%E7%8E%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>服务器controller实现</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">router</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">'</span>/async<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
+
+    <span class="pl-c">//you can assign async data like this  the async content will be rendered in chunk mode</span>
+    <span class="pl-smi">res</span>.<span class="pl-smi">bigpipe</span>.<span class="pl-en">bind</span>(<span class="pl-s"><span class="pl-pds">'</span>async<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">setter</span>) {
+
+        <span class="pl-c">// simulate an async progress</span>
+        <span class="pl-c1">setTimeout</span>(<span class="pl-k">function</span>() {
+
+            <span class="pl-c">// now set data to the pagelet</span>
+            <span class="pl-en">setter</span>(<span class="pl-c1">null</span>, {
+                title<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>bigpipe async test<span class="pl-pds">'</span></span>,
+                content<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>async 此类 widget 在输出时，也只会输出个壳子，但是内容在 body 输出完后，chunk 输出 js 自动填充。widget 将忽略顺序，谁先准备好，谁先输出。<span class="pl-pds">'</span></span>
+            });
+        }, <span class="pl-c1">2000</span>);
+    });
+
+    <span class="pl-smi">res</span>.<span class="pl-en">render</span>(<span class="pl-s"><span class="pl-pds">'</span>page/test/async/async.tpl<span class="pl-pds">'</span></span>, {});
+});</pre></div>
+
+<h3>
+<a id="es6-generator-yield" class="anchor" href="#es6-generator-yield" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>es6 generator yield</h3>
+
+<ul>
+<li><a href="http://www.alloyteam.com/2015/03/es6-generator-introduction/">http://www.alloyteam.com/2015/03/es6-generator-introduction/</a></li>
+<li><a href="http://www.html-js.com/article/A-day-to-learn-JavaScript-to-replace-the-callback-function-with-ES6-Generator">http://www.html-js.com/article/A-day-to-learn-JavaScript-to-replace-the-callback-function-with-ES6-Generator</a></li>
+</ul>
+
 <h3>
 <a id="fis-confjs" class="anchor" href="#fis-confjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>fis-conf.js</h3>
 
 <p>编译配置文件，详情请查看<a href="http://fis.baidu.com/docs/api/fis-conf.html">配置 API</a>。</p>
 
-<p><a href="http://www.tuicool.com/articles/6jueiib">http://www.tuicool.com/articles/6jueiib</a></p>
-
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/hubcarl/weg">Weg</a> is maintained by <a href="https://github.com/hubcarl">hubcarl</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/hubcarl/weg">weg</a> is maintained by <a href="https://github.com/hubcarl">hubcarl</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
