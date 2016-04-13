@@ -1,7 +1,11 @@
 #weg
 
 
-基于weg+express+swig的前端和后端集成解决方案。在阅读此文档之前，希望你最好对fis3、swig、express 、mysql有一定的了解。
+基于fis3+express+swig的前端和后端集成解决方案。在阅读此文档之前，希望你最好对fis3、swig、express 、mysql有一定的了解。
+
+#weg-blog
+
+基于weg+express+swig的前端和后端集成解决方案工程示例。
 
 
 ## 目录
@@ -12,25 +16,26 @@
  - [client 目录](#前端)
     - [public 目录](#page-目录)
         - [component 目录](#组件)
+        - [framework 目录](#组件,不会被cmd)
         - [static 目录](#css／js／image公共静态资源)
     - [views 目录](#static-目录)
       - [page 目录](#页面模板)
       - [widget 目录](#组件)
-    - [server.conf](#serverconf)
  - [server 目录](#后端)
+    - [config 目录](#服务器配置)
     - [controller 目录](#路由)
-    - [lib 目录](#组件扩展)
+    - [lib 目录](#第三发组件或者组件扩展)
     - [middleware 目录](#中间件)
     - [model 目录](＃数据模型)
     - [utils 目录](＃工具类)
  - [fis-conf.js](#fis配置文件)
- - [server.js](#express启动入口)
+ - [server.js](#express启动入口, weg默认启动文件,自定义:weg server start --entry app.js)
 
 ## 特点
 
-* 基于原生fis前端集成方案对前端资源进行打包，相比自定义fis扩展，方便fis组件升级和维护。
-* 整合前端和后端，提供一套骨架，并提供基于mysql的运行示例，拿来即可使用，扩展也很方便。
-* 模板引擎采用 [swig](http://paularmstrong.github.io/swig/) ，提供易用的 `html`、`head`、`body`、`widget`、`script`、`style` 等扩展标签。基于这些标签后端可以自动完成对页面的性能优化。
+* 基于原生fis3前端集成方案对前端资源进行打包，相比自定义fis扩展，方便fis组件升级和维护。
+* 整合前端和node.js后端，提供一套express + swig骨架，并提供基于mysql的运行实例. 服务器支持路由,中间件自动注册, 同时引入coexpress 解决异步回调问题, 支持es6 yield语法.  拿来即可使用，扩展也很方便。
+* 模板引擎采用 [swig](http://paularmstrong.github.io/swig/) ，提供易用的 `html`、`head`、`body`、`pagelet`、`widget`、`script`、`style` 等扩展标签。基于这些标签后端可以自动完成对页面的性能优化。
 * 基于 `widget` 标签，可以轻松实现组件化，同名tpl、 css、js自动关联加载。
 
 
@@ -57,7 +62,7 @@ cd weg-blog
 
 #工程运行
 weg release -w 文件修改监控
-weg server start  --entry app.js 指定node启动入口文件
+weg server start  默认入口文件为server.js  自定义入口文件需要指定entry参数(weg server start --entry app.js)
 ```
 
 ### page 目录
@@ -146,8 +151,8 @@ news/index/index.tpl
 {% require "client/views/page/news/index/index.js" %}
 
 {% script %}
-    console.log('>>>>test>>>>>');
-    require('client/views/page/news/index/index.js');
+    // 支持相对路径
+    require('./index.js');
 {% endscript %}
 
 
@@ -196,7 +201,7 @@ news/index/index.tpl
   ```
 3. 纯 css 类：只是包含 css 文件。比如 compass. 同样也是可以通过 require 标签引用。
 
-### bigpipe
+## BigPipe+Pagelet
 
 采用 bigpipe 方案，允许你在渲染页面的时候，提前将框架输出，后续再把耗时的 pagelet 通过 chunk 方式输出到页面，以加速网页渲染。
 
@@ -210,7 +215,7 @@ news/index/index.tpl
 - 要让 bigpipe 正常运行，需要前端引入 bigpipe.js, 另外 pagelet 为 quickling 模式，是不会自动加载的，需要用户主动去调用 BigPipe.load 方法，才会加载并渲染
 
 
-## 客户端 Pagelet.js
+### 客户端 Pagelet
 
 对外暴露以下几个方法。
 
@@ -240,20 +245,17 @@ Pagelet.onPageletArrive({"container":"pages-container","id":"spage","html":"cont
 
 调用方式：
 
-```javascript  
-Pagelet.load('pageletId');
-
-Pagelet.load('pageletId1 pageletId2 pagelet Id3');
-
+```
 Pagelet.load({
-    pagelets: ['pageletId1', 'pageletId2']
-    url: '/other page url',
-    cacheID: 'pageletId1&pageletId2', // 设置后不会重复请求Pagelet
-    param: 'key1=val1&key2=val2',
-    container: dom /* or id or {pageletId1: dom1, pageletId2: dom2}*/,
-    cb: function() {
-        // excuted when all done.
-    }
+        url:'/news/index/' + pager.pageIndex + '/' + pager.pageSize,
+        pagelets: ['list'],
+        container: 'articleList',
+        param: 'key1=val1&key2=val2',
+        callback: function (data) {
+            console.log(data);
+            successCallback(data);
+            console.log('pipe load done');
+        }
 });
 ```
 
@@ -262,22 +264,8 @@ Pagelet.load({
 * `pagelets` pagelets 的 id 列表，可以是单个 pagelet， 也可以是多个用空格隔开，或者直接就是一个数组，里面由 pagelet id 组成。
 * `url` 页面地址，默认是从当前页面去加载 pagelet，有时你可能需要加载其他页面的 pagelet。
 * `param` 附带参数内容。
-* `cacheID` pagelet 请求的缓存ID，不设置则请求不会被缓存。
 * `container` 指定 pagelet 渲染时的容器。
-* `cb` 回调，完成后触发。
-
-### BigPipe 事件
-
-* `pageletarrive` 当 pagelet 即将渲染前触发。
-* `pageletinsert` pagelet 开始渲染，并已经插入了 css 和 dom 了，还没开始执行脚本时触发。
-* `pageletdone` 当 pagelet 全部渲染完成触发。
-
-事件 API
-
-* on(type, callback)
-* off(type?, callback?)
-* once(type, callback)
-* trigger(type, args...?)
+* `callback` 回调，完成后触发。
 
 ### 服务器controller实现
 
@@ -303,12 +291,46 @@ router.get('/async', function (req, res) {
 });
 ```
 
-### es6 generator yield
+## 服务器标签
 
-- http://www.alloyteam.com/2015/03/es6-generator-introduction/
-- http://www.html-js.com/article/A-day-to-learn-JavaScript-to-replace-the-callback-function-with-ES6-Generator
+### pagelet标签
 
-### fis-conf.js 
+```
+支持 id ,tag, append 参数: tag="none" 或者没有 表示不生成标签, append=true 表示进行Pagelet.load 方法时内容时追加,否则为替换, 默认为内容替换.
+{% pagelet id="list" tag="none" append="true" %}
+     {% widget "widget/news/index/index.tpl" %}
+{% endpagelet %}
+```
 
-编译配置文件，详情请查看[配置 API](http://fis.baidu.com/docs/api/fis-conf.html)。
+### pagelet客户端结合Pagelet.load方法使用
 
+```
+Pagelet.load({
+        url:'/news/index/' + pager.pageIndex + '/' + pager.pageSize,
+        pagelets: ['list'],
+        container: 'articleList',
+        param: 'key1=val1&key2=val2',
+        callback: function (data) {
+            console.log(data);
+            successCallback(data);
+            console.log('pipe load done');
+        }
+});
+```
+
+## 自定义node_modules依赖
+
+- weg-swig 基于swig进行扩展,支持`html`、`head`、`body`、`pagelet`、`widget`、`script`、`style` 等扩展标签
+- weg-resource 前端静态资源map依赖表解析插件
+- weg-bigpipe  bigpipe和pagelet 插件
+
+## 自定义框架中间件
+
+- middleware.js  中间件根据配置文件自动注册
+- router.js  遍历指定目录自动注册路由
+
+
+## 参考框架
+
+- yog
+- yogurt
