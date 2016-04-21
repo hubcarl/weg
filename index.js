@@ -6,6 +6,8 @@ fis.cli.name = 'weg';
 fis.cli.info = require('./package.json');
 
 fis.set('project.ignore', ['output/**', 'node_modules/**', '.git/**', '.svn/**']);
+//设置server根目录用于监控server修改,重新启动服务,默认为server
+fis.set('project.serverDir', 'server');
 
 fis.hook('commonjs',{});
 
