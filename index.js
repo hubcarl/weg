@@ -1,6 +1,6 @@
 
 var fis = module.exports =  require('fis3');
-
+fis.log.level = fis.log.L_ERROR;
 fis.require.prefixes.unshift('weg');
 fis.cli.name = 'weg';
 fis.cli.info = require('./package.json');
