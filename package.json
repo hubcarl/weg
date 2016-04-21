@@ -39,9 +39,9 @@
     "fis3-hook-components": "1.0.3",
     "fis3-packager-map": "1.0.9",
     "fis3-errors": "*",
-    "weg-command-server": "lastest",
-    "weg-hook-commonjs": "lastest",
-    "weg-preprocessor-extlang": "lastest",
+    "weg-command-server": "latest",
+    "weg-hook-commonjs": "latest",
+    "weg-preprocessor-extlang": "latest",
     "fis3-postpackager-loader": "1.3.12",
     "fis-parser-less": "^0.1.3"
   },
