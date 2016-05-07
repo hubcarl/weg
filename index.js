@@ -1,13 +1,23 @@
 
 var fis = module.exports =  require('fis3');
+var path = require('path');
+var project = fis.project.getProjectPath().split('/').pop();
+fis.project.setTempRoot(path.join(fis.project.getTempPath(),project));
+
 fis.log.level = fis.log.L_ERROR;
 fis.require.prefixes.unshift('weg');
 fis.cli.name = 'weg';
 fis.cli.info = require('./package.json');
 
 fis.set('project.ignore', ['output/**', 'node_modules/**', '.git/**', '.svn/**']);
+
 //设置server根目录用于监控server修改,重新启动服务,默认为server
 fis.set('project.serverDir', 'server');
+
+//设置不清理目录
+fis.set('server.clean.exclude', ['node_modules/**']);
+
+
 
 fis.hook('commonjs',{});
 

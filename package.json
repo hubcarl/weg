@@ -1,6 +1,6 @@
 {
   "name": "weg",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -43,7 +43,8 @@
     "weg-hook-commonjs": "latest",
     "weg-preprocessor-extlang": "latest",
     "fis3-postpackager-loader": "1.3.12",
-    "fis-parser-less": "^0.1.3"
+    "fis-parser-less": "^0.1.3",
+    "fis-parser-babel-5.x":"latest"
   },
   "devDependencies": {
     "chai": "^2.2.0",
