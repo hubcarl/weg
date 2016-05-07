@@ -1,6 +1,6 @@
 {
   "name": "weg",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -13,51 +13,20 @@
     "name": "hubcarl"
   },
   "dependencies": {
-    "colors": "0.6.2",
-    "commander": "1.3.2",
-    "glob": "5.0.3",
-    "iconv-lite": "0.2.10",
-    "liftoff": "2.0.2",
-    "lodash": "3.6.0",
-    "minimatch": "2.0.4",
     "minimist": "1.1.1",
-    "resolve": "1.1.6",
-    "tar": "0.1.17",
-    "fis-command-install": "0.2.15",
-    "fis-lolcat": "1.0.1",
-    "fis-optimizer-clean-css": "0.0.9",
-    "fis-optimizer-png-compressor": "0.1.5",
-    "fis-optimizer-uglify-js": "0.1.10",
-    "fis-spriter-csssprites": "0.3.9",
-    "fis3-command-init": "1.0.13",
-    "fis3-command-inspect": "1.0.3",
-    "fis3-command-release": "1.2.9",
-    "fis3-server-node": "0.0.6",
-    "fis3-deploy-local-deliver": "1.0.0",
-    "fis3-deploy-http-push": "1.0.1",
-    "fis3-deploy-encoding": "1.0.0",
-    "fis3-hook-components": "1.0.3",
-    "fis3-packager-map": "1.0.9",
-    "fis3-errors": "*",
+    "liftoff": "2.0.2",
+    "fis3":"3.3.6",
+    "fis3-postpackager-loader": "1.3.12",
     "weg-command-server": "latest",
     "weg-hook-commonjs": "latest",
     "weg-preprocessor-extlang": "latest",
-    "fis3-postpackager-loader": "1.3.12",
     "fis-parser-less": "^0.1.3",
-    "fis-parser-babel-5.x":"latest"
+    "fis-parser-babel-5.x": "latest"
   },
   "devDependencies": {
-    "chai": "^2.2.0",
-    "jsdoc": "^3.3.2",
-    "minami": "git://github.com/2betop/minami.git",
-    "mocha": "^2.2.1",
-    "mocha-junit-reporter": "^1.4.0",
-    "npm-watch": "0.0.0",
-    "istanbul": "~0.2.14",
-    "coveralls": "2.10.0"
   },
-  "_id": "weg@0.0.3",
-  "_shasum": "049781316d6bb1d0d00df2f788b2172b945beecc",
+  "_id": "weg@1.0.3",
+  "_shasum": "786c04a9facf43db5d9a2a089c78371771fda06f",
   "_from": "weg@*",
   "_npmVersion": "2.14.7",
   "_nodeVersion": "4.2.3",
@@ -80,5 +49,8 @@
     "tmp": "tmp/weg-0.0.3.tgz_1458798233215_0.20293906587176025"
   },
   "directories": {},
-  "_resolved": "https://registry.npmjs.org/weg/-/weg-0.0.3.tgz"
+  "_resolved": "https://registry.npmjs.org/weg/-/weg-0.0.3.tgz",
+  "readme": "#weg\n\n\n基于fis3+express+swig的前端和后端集成解决方案。在阅读此文档之前，希望你最好对fis3、swig、express 、mysql有一定的了解。\n\n#weg-blog\n\n基于weg+express+swig的前端和后端集成解决方案工程示例。\n\n\n## 目录\n\n* [特点](#特点)\n* [快速开始](#快速开始)\n* [目录规范](#目录规范)\n - [client 目录](#前端)\n    - [public 目录](#page-目录)\n        - [component 目录](#组件)\n        - [framework 目录](#组件,不会被cmd)\n        - [static 目录](#css／js／image公共静态资源)\n    - [views 目录](#static-目录)\n      - [page 目录](#页面模板)\n      - [widget 目录](#组件)\n - [server 目录](#后端)\n    - [config 目录](#服务器配置)\n    - [controller 目录](#路由)\n    - [lib 目录](#第三发组件或者组件扩展)\n    - [middleware 目录](#中间件)\n    - [model 目录](＃数据模型)\n    - [utils 目录](＃工具类)\n - [fis-conf.js](#fis配置文件)\n - [server.js](#express启动入口, weg默认启动文件,自定义:weg server start --entry app.js)\n\n## 特点\n\n* 基于原生fis3前端集成方案对前端资源进行打包，相比自定义fis扩展，方便fis组件升级和维护。\n* 整合前端和node.js后端，提供一套express + swig骨架，并提供基于mysql的运行实例. 服务器支持路由,中间件自动注册, 同时引入coexpress 解决异步回调问题, 支持es6 yield语法.  拿来即可使用，扩展也很方便。\n* 模板引擎采用 [swig](http://paularmstrong.github.io/swig/) ，提供易用的 `html`、`head`、`body`、`pagelet`、`widget`、`script`、`style` 等扩展标签。基于这些标签后端可以自动完成对页面的性能优化。\n* 基于 `widget` 标签，可以轻松实现组件化，同名tpl、 css、js自动关联加载。\n\n\n## 示例截图\n\n ![image](https://raw.githubusercontent.com/hubcarl/weg-blog/master/client/public/static/images/demo.png)\n\n\n## 快速开始\n\n如果还没有安装 [node](http://nodejs.org) 请先安装 [node](http://nodejs.org).\n\n```bash\n# 安装 fis 到全局\nnpm install -g weg\n\n# 下载工程.\ngit clone https://github.com/hubcarl/weg-blog.git\n\n\n# 进入 weg-blog  目录， release 后就可以预览了。\ncd weg-blog\n\n\n#工程运行\nweg release -w 文件修改监控\nweg server start  默认入口文件为server.js  自定义入口文件需要指定entry参数(weg server start --entry app.js)\n```\n\n### page 目录\n\n所有页面级别的模板文件，放在此目录。此tpl 可以直接在浏览器中预览。比如 page/index.tpl 可以通过 http://127.0.0.1:9000 访问。 需要强调的的是，模板引擎采用的是 [swig](http://paularmstrong.github.io/swig/), 可以采用模板继承机制来实现模板复用。\n\nlayout.tpl\n\n```tpl\n<!doctype html>\n{% html lang=\"en\" framework=\"public/static/js/mod.js\"  %}\n    {% head %}\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <meta name=\"description\" content=\"\">\n        <meta name=\"author\" content=\"\">\n        <link rel=\"icon\" href=\"/static/favicon.ico\">\n        <title>{{ title }}</title>\n\n        {% require \"public/static/css/normalize.css\" %}\n        {% require \"public/static/css/bootstrap.css\" %}\n        {% require \"public/static/css/app.css\" %}\n\n\n    {% endhead %}\n\n    {% body %}\n\n        {% widget \"widget/menu/menu.tpl\" %}\n\n\n            {% block beforecontent %}\n            {% endblock %}\n\n            <div class=\"container\">\n                {% block content %}\n                {% endblock %}\n            </div>\n    \n        {% block aftercontent %}\n        {% endblock %}\n    \n    {% endbody %}\n\n{% endhtml %}\n\n```\n\nnews/index/index.tpl\n\n```tpl\n{% extends 'page/layout.tpl' %}\n\n{% block content %}\n\n<div class=\"container smart-container\">\n    <div class=\"row row-offcanvas row-offcanvas-right\">\n        <div class=\"col-xs-12 col-sm-9\">\n            <ul class=\"smart-artiles\" id=\"articleList\">\n                {% for item in list %}\n                <li>\n                    <div class=\"point\">+{{item.hits}}</div>\n                    <div class=\"card\">\n                        <h2><a href=\"/detail/{{item.id}}\" target=\"_blank\">{{item.title}}</a></h2>\n                        <div>\n                            <ul class=\"actions\">\n                                <li>\n                                    <time class=\"timeago\">{{item.createDate}}</time>\n                                </li>\n                                <li class=\"tauthor\">\n                                    <a href=\"#\" target=\"_blank\" class=\"get\">Sky</a>\n                                </li>\n                                <li><a href=\"#\" class=\"kblink-8007\">+收藏</a></li>\n                            </ul>\n                        </div>\n                    </div>\n                </li>\n                {% endfor %}\n            </ul>\n            <div id=\"pagerBottom\" class=\"smart-pager\"></div>\n        </div>\n    </div>\n</div>\n\n{% require \"client/views/page/news/index/index.js\" %}\n\n{% script %}\n    // 支持相对路径\n    require('./index.js');\n{% endscript %}\n\n\n{% endblock %}\n\n```\n\n### static 目录\n\n用来存放所有静态资源文件，css, js, images ,组件等等。如：\n\n```\n├── css\n│   ├── bootstrap-theme.css\n│   ├── bootstrap.css\n│   └── style.css\n└── js\n    ├── bootstrap.js\n    └── mod.js\n```\n\n### widget 目录\n\n用来存放各类组件代码。组件分成3类。\n\n1. 模板类：包含 tpl, 可以选择性的添加 js 和 css 文件，同名的 js 和 css 会被自动加载。\n\n  模板类文件，可以在模板中通过 widget 标签引用。如\n\n  ```tpl\n  {% widget \"widget/menu/menu.tpl\" %}\n  ```\n2. js 类： 主要包含 js 文件，放在此目录下的文件一般都会自动被 amd define 包裹，可选择性的添加同名 css 文件，会自动被引用。\n\n  此类组件，可以在 tpl 或者 js 中通过 require 标签引用。\n\n  ```tpl\n  \n    {% require \"client/views/page/news/index/index.js\" %}\n\n    {% script %}\n        console.log('>>>>test>>>>>');\n        require('client/views/page/news/index/index.js');\n    {% endscript %}\n\n  ```\n3. 纯 css 类：只是包含 css 文件。比如 compass. 同样也是可以通过 require 标签引用。\n\n## BigPipe+Pagelet\n\n采用 bigpipe 方案，允许你在渲染页面的时候，提前将框架输出，后续再把耗时的 pagelet 通过 chunk 方式输出到页面，以加速网页渲染。\n\n- sync 默认就是此模式，直接输出。\n- quicking 此类 widget 在输出时，只会输出个壳子，内容由用户自行决定通过 js，另起请求完成填充，包括静态资源加载。\n- async 此类 widget 在输出时，也只会输出个壳子，但是内容在 body 输出完后，chunk 输出 js 自动填充。widget 将忽略顺序，谁先准备好，谁先输出。\n- pipeline 与 async 基本相同，只是它会严格按顺序输出。\n\n  {% widget \"widget/header/header.html\" mode=\"pipeline\" id=\"header\" %}\n\n- 要让 bigpipe 正常运行，需要前端引入 bigpipe.js, 另外 pagelet 为 quickling 模式，是不会自动加载的，需要用户主动去调用 BigPipe.load 方法，才会加载并渲染\n\n\n### 客户端 Pagelet\n\n对外暴露以下几个方法。\n\n### Pagelet.onPageletArrive\n\n此方法不需要主动去调用，当 pagelet 输出的时候会自动调用这个方法。不管是 `chunk` 输出的 `pagelet`, 还是靠第二次请求 `quickling` 类型的 `pagelet` 都是靠此方法渲染。\n\n示例：\n\n```javascript\nPagelet.onPageletArrive({\"container\":\"pages-container\",\"id\":\"spage\",\"html\":\"contact us\",\"js\":[],\"css\":[],\"styles\":[],\"scripts\":[]});\n```\n\n格式说明 \n\n* `container` 容器\n* `id` pagelet id\n* `html` 内容\n* `js` 外联 js 集合\n* `css` 外联 css 集合\n* `styles` 内联 css 集合\n* `scripts` 内联 js 集合\n\n### Pagelet.load\n\n默认 `quickling` 性质的 `pagelet` 不会主动加载，需要用户主动调用此方法，才会开始加载。\n\n调用方式：\n\n```\nPagelet.load({\n        url:'/news/index/' + pager.pageIndex + '/' + pager.pageSize,\n        pagelets: ['list'],\n        container: 'articleList',\n        param: 'key1=val1&key2=val2',\n        callback: function (data) {\n            console.log(data);\n            successCallback(data);\n            console.log('pipe load done');\n        }\n});\n```\n\n参数说明\n\n* `pagelets` pagelets 的 id 列表，可以是单个 pagelet， 也可以是多个用空格隔开，或者直接就是一个数组，里面由 pagelet id 组成。\n* `url` 页面地址，默认是从当前页面去加载 pagelet，有时你可能需要加载其他页面的 pagelet。\n* `param` 附带参数内容。\n* `container` 指定 pagelet 渲染时的容器。\n* `callback` 回调，完成后触发。\n\n### 服务器controller实现\n\n\n```javascript\nrouter.get('/async', function (req, res) {\n\n    //you can assign async data like this  the async content will be rendered in chunk mode\n    res.bigpipe.bind('async', function(setter) {\n\n        // simulate an async progress\n        setTimeout(function() {\n\n            // now set data to the pagelet\n            setter(null, {\n                title:'bigpipe async test',\n                content:'async 此类 widget 在输出时，也只会输出个壳子，但是内容在 body 输出完后，chunk 输出 js 自动填充。widget 将忽略顺序，谁先准备好，谁先输出。'\n            });\n        }, 2000);\n    });\n\n    res.render('page/test/async/async.tpl', {});\n});\n```\n\n## 服务器标签\n\n### pagelet标签\n\n```\n支持 id ,tag, append 参数: tag=\"none\" 或者没有 表示不生成标签, append=true 表示进行Pagelet.load 方法时内容时追加,否则为替换, 默认为内容替换.\n{% pagelet id=\"list\" tag=\"none\" append=\"true\" %}\n     {% widget \"widget/news/index/index.tpl\" %}\n{% endpagelet %}\n```\n\n### pagelet客户端结合Pagelet.load方法使用\n\n```\nPagelet.load({\n        url:'/news/index/' + pager.pageIndex + '/' + pager.pageSize,\n        pagelets: ['list'],\n        container: 'articleList',\n        param: 'key1=val1&key2=val2',\n        callback: function (data) {\n            console.log(data);\n            successCallback(data);\n            console.log('pipe load done');\n        }\n});\n```\n\n## 自定义node_modules依赖\n\n- weg-swig 基于swig进行扩展,支持`html`、`head`、`body`、`pagelet`、`widget`、`script`、`style` 等扩展标签\n- weg-resource 前端静态资源map依赖表解析插件\n- weg-bigpipe  bigpipe和pagelet 插件\n\n## 自定义框架中间件\n\n- middleware.js  中间件根据配置文件自动注册\n- router.js  遍历指定目录自动注册路由\n\n\n## 参考框架\n\n- yog\n- yogurt\n",
+  "readmeFilename": "README.md",
+  "gitHead": "9cd49a0444ba61ab2b560e03243dcc68ae3396fb"
 }

@@ -1,13 +1,16 @@
 
 var fis = module.exports =  require('fis3');
 var path = require('path');
-var project = fis.project.getProjectPath().split('/').pop();
-fis.project.setTempRoot(path.join(fis.project.getTempPath(),project));
 
 fis.log.level = fis.log.L_ERROR;
 fis.require.prefixes.unshift('weg');
 fis.cli.name = 'weg';
 fis.cli.info = require('./package.json');
+
+//每个项目有独立的release目录
+fis.project.init = function(name){
+    fis.project.setTempRoot(path.join(fis.project.getTempPath(),name||fis.project.getProjectPath().split('/').pop()));
+}
 
 fis.set('project.ignore', ['output/**', 'node_modules/**', '.git/**', '.svn/**']);
 
